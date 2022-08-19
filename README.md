@@ -10,7 +10,7 @@ Hummingbot is an open source client-side framework that helps you build, manage,
 
 ### [Docs](https://hummingbot.org/docs/) · [Install](https://hummingbot.org/installation/) · [FAQ](https://hummingbot.org/faq/) ·  [Developers](https://hummingbot.org/developers/) · [CEX Connectors](#centralized-exchange-connectors) · [DEX Connectors](#decentralized-exchange-connectors)
 
-## Why Hummingbot?
+## Why Hummingbot? TEST
 
 * **CEX and DEX connectors**: Hummingbot supports connectors to 30+ centralized exchanges and 7+ decentralized exchanges
 * **Advanced market making strategies**: Hummingbot ships with 10+ customizable strategy templates like [Cross-Exchange Market Making](https://hummingbot.org/strategies/cross-exchange-market-making/), [Avellaneda Market Making](https://hummingbot.org/strategies/avellaneda-market-making/) (based on the classic [Avellaneda & Stoikov paper](https://people.orie.cornell.edu/sfs33/LimitOrderBook.pdf)), and [Spot Perpetual Arbitrage](https://hummingbot.org/strategies/spot-perpetual-arbitrage/)
