@@ -459,10 +459,17 @@ class GatewayCommand(GatewayChainApiManager):
                         native_token: str = native_tokens[chain]
                         wallet_table: List[Dict[str, Any]] = []
                         for w in wallets:
+                            self.notify("*** here1")
                             balances: Dict[str, Any] = await self._get_gateway_instance().get_balances(
-                                chain, network, w, [native_token]
+                                chain, network, w, [native_token, 'USDC']
                             )
+                            print('*** BALANCES')
+                            self.notify('*** BALANCES')
+                            balances_list = [f"{k}, {v}" for k, v in balances.items()]
+                            balances_str = ", ".join(balances_list)
+                            self.notify(balances_str)
                             wallet_table.append({"balance": balances['balances'][native_token], "address": w})
+                            wallet_table.append({"balance": balances['balances']['USDC'], "address": w})
 
                         wallet_df: pd.DataFrame = build_wallet_display(native_token, wallet_table)
                         self.notify(wallet_df.to_string(index=False))

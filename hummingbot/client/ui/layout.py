@@ -24,59 +24,60 @@ from hummingbot.client.tab.data_types import CommandTab
 from hummingbot.client.ui.custom_widgets import CustomTextArea as TextArea, FormattedTextLexer
 from hummingbot.core.gateway.status_monitor import Status as GatewayStatus
 
-HEADER = """
-                                                *,.
-                                                *,,,*
-                                            ,,,,,,,               *
-                                            ,,,,,,,,            ,,,,
-                                            *,,,,,,,,(        .,,,,,,
-                                        /,,,,,,,,,,     .*,,,,,,,,
-                                        .,,,,,,,,,,,.  ,,,,,,,,,,,*
-                                        ,,,,,,,,,,,,,,,,,,,,,,,,,,,
-                            //      ,,,,,,,,,,,,,,,,,,,,,,,,,,,,#*%
-                        .,,,,,,,,. *,,,,,,,,,,,,,,,,,,,,,,,,,,,%%%%%%&@
-                        ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,%%%%%%%&
-                    ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,%%%%%%%&
-                    /*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,(((((%%&
-                **.         #,,,,,,,,,,,,,,,,,,,,,,,,,,,,,((((((((((#.
-            **               *,,,,,,,,,,,,,,,,,,,,,,,,**/(((((((((((((*
-                                ,,,,,,,,,,,,,,,,,,,,*********((((((((((((
-                                ,,,,,,,,,,,,,,,**************((((((((@
-                                (,,,,,,,,,,,,,,,***************(#
-                                    *,,,,,,,,,,,,,,,,**************/
-                                    ,,,,,,,,,,,,,,,***************/
-                                        ,,,,,,,,,,,,,,****************
-                                        .,,,,,,,,,,,,**************/
-                                            ,,,,,,,,*******,
-                                            *,,,,,,,,********
-                                            ,,,,,,,,,/******/
-                                            ,,,,,,,,,@  /****/
-                                            ,,,,,,,,
-                                            , */
-
-
-██   ██ ██    ██ ███    ███ ███    ███ ██ ███    ██  ██████  ██████   ██████  ████████
-██   ██ ██    ██ ████  ████ ████  ████ ██ ████   ██ ██       ██   ██ ██    ██    ██
-███████ ██    ██ ██ ████ ██ ██ ████ ██ ██ ██ ██  ██ ██   ███ ██████  ██    ██    ██
-██   ██ ██    ██ ██  ██  ██ ██  ██  ██ ██ ██  ██ ██ ██    ██ ██   ██ ██    ██    ██
-██   ██  ██████  ██      ██ ██      ██ ██ ██   ████  ██████  ██████   ██████     ██
-
-=======================================================================================
-Welcome to Hummingbot, an open source software client that helps you build and run
-high-frequency trading (HFT) bots.
-
-Helpful Links:
-- Get 24/7 support: https://discord.hummingbot.io
-- Learn how to use Hummingbot: https://docs.hummingbot.io
-- Earn liquidity rewards: https://miner.hummingbot.io
-
-Useful Commands:
-- connect     List available exchanges and add API keys to them
-- create      Create a new bot
-- import      Import an existing bot by loading the configuration file
-- help        List available commands
-
-"""
+HEADER = "GOOD EVENING, IVAN,"
+# HEADER = """
+#                                                 *,.
+#                                                 *,,,*
+#                                             ,,,,,,,               *
+#                                             ,,,,,,,,            ,,,,
+#                                             *,,,,,,,,(        .,,,,,,
+#                                         /,,,,,,,,,,     .*,,,,,,,,
+#                                         .,,,,,,,,,,,.  ,,,,,,,,,,,*
+#                                         ,,,,,,,,,,,,,,,,,,,,,,,,,,,
+#                             //      ,,,,,,,,,,,,,,,,,,,,,,,,,,,,#*%
+#                         .,,,,,,,,. *,,,,,,,,,,,,,,,,,,,,,,,,,,,%%%%%%&@
+#                         ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,%%%%%%%&
+#                     ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,%%%%%%%&
+#                     /*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,(((((%%&
+#                 **.         #,,,,,,,,,,,,,,,,,,,,,,,,,,,,,((((((((((#.
+#             **               *,,,,,,,,,,,,,,,,,,,,,,,,**/(((((((((((((*
+#                                 ,,,,,,,,,,,,,,,,,,,,*********((((((((((((
+#                                 ,,,,,,,,,,,,,,,**************((((((((@
+#                                 (,,,,,,,,,,,,,,,***************(#
+#                                     *,,,,,,,,,,,,,,,,**************/
+#                                     ,,,,,,,,,,,,,,,***************/
+#                                         ,,,,,,,,,,,,,,****************
+#                                         .,,,,,,,,,,,,**************/
+#                                             ,,,,,,,,*******,
+#                                             *,,,,,,,,********
+#                                             ,,,,,,,,,/******/
+#                                             ,,,,,,,,,@  /****/
+#                                             ,,,,,,,,
+#                                             , */
+#
+#
+# ██   ██ ██    ██ ███    ███ ███    ███ ██ ███    ██  ██████  ██████   ██████  ████████
+# ██   ██ ██    ██ ████  ████ ████  ████ ██ ████   ██ ██       ██   ██ ██    ██    ██
+# ███████ ██    ██ ██ ████ ██ ██ ████ ██ ██ ██ ██  ██ ██   ███ ██████  ██    ██    ██
+# ██   ██ ██    ██ ██  ██  ██ ██  ██  ██ ██ ██  ██ ██ ██    ██ ██   ██ ██    ██    ██
+# ██   ██  ██████  ██      ██ ██      ██ ██ ██   ████  ██████  ██████   ██████     ██
+#
+# =======================================================================================
+# Welcome to Hummingbot, an open source software client that helps you build and run
+# high-frequency trading (HFT) bots.
+#
+# Helpful Links:
+# - Get 24/7 support: https://discord.hummingbot.io
+# - Learn how to use Hummingbot: https://docs.hummingbot.io
+# - Earn liquidity rewards: https://miner.hummingbot.io
+#
+# Useful Commands:
+# - connect     List available exchanges and add API keys to them
+# - create      Create a new bot
+# - import      Import an existing bot by loading the configuration file
+# - help        List available commands
+#
+# """
 
 with open(realpath(join(dirname(__file__), '../../VERSION'))) as version_file:
     version = version_file.read().strip()

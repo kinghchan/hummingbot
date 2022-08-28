@@ -2,11 +2,8 @@ from decimal import Decimal
 from typing import List, Optional
 
 from hummingbot.strategy.market_trading_pair_tuple import MarketTradingPairTuple
-from .data_types import (
-    ArbProposal,
-    ArbProposalSide,
-    TokenAmount,
-)
+
+from .data_types import ArbProposal, ArbProposalSide, TokenAmount
 
 s_decimal_nan = Decimal("NaN")
 
@@ -34,15 +31,24 @@ async def create_arb_proposals(
         m_1_q_price: Optional[Decimal] = await market_info_1.market.get_quote_price(
             market_info_1.trading_pair, is_buy, order_amount
         )
+        # print(f"market_info_1.get_quote_price: {m_1_q_price}")
+
         m_1_o_price: Optional[Decimal] = await market_info_1.market.get_order_price(
             market_info_1.trading_pair, is_buy, order_amount
         )
+        # print(f"market_info_1.get_order_price: {m_1_o_price}")
+
         m_2_q_price: Optional[Decimal] = await market_info_2.market.get_quote_price(
             market_info_2.trading_pair, not is_buy, order_amount
         )
+        # print(f"market_info_2.get_quote_price: {m_2_q_price}")
+
         m_2_o_price: Optional[Decimal] = await market_info_2.market.get_order_price(
             market_info_2.trading_pair, not is_buy, order_amount
         )
+        # print(f"market_info_2.get_order_price: {m_2_o_price}")
+
+
         if any(p is None for p in (m_1_o_price, m_1_q_price, m_2_o_price, m_2_q_price)):
             continue
         first_side = ArbProposalSide(

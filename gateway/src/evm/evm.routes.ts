@@ -68,7 +68,8 @@ export namespace EVMRoutes {
       ) => {
         validateAllowancesRequest(req.body);
         const chain = await getChain(req.body.chain, req.body.network);
-        res.status(200).json(await allowances(chain, req.body));
+        const resp = await allowances(chain, req.body);
+        res.status(200).json(resp);
       }
     )
   );

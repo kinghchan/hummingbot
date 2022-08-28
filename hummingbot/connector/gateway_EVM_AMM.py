@@ -350,6 +350,7 @@ class GatewayEVMAMM(ConnectorBase):
         )
         for token, amount in resp["approvals"].items():
             ret_val[token] = Decimal(str(amount))
+        print(f"get_allowances() --> {ret_val}")
         return ret_val
 
     @async_ttl_cache(ttl=5, maxsize=10)

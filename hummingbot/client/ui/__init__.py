@@ -55,11 +55,12 @@ def login_prompt(secrets_manager_cls: Type[BaseSecretsManager], style: Style):
             store_password_verification(secrets_manager)
         migrate_non_secure_only_prompt(style)
     else:
-        password = input_dialog(
-            title="Welcome back to Hummingbot",
-            text="Enter your password:",
-            password=True,
-            style=style).run()
+        # password = input_dialog(
+        #     title="Welcome back to Hummingbot",
+        #     text="Enter your password:",
+        #     password=True,
+        #     style=style).run()
+        password = 'hummingbot'
         if password is None:
             return None
         secrets_manager = secrets_manager_cls(password)

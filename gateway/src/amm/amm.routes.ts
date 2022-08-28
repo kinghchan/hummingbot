@@ -70,7 +70,8 @@ export namespace AmmRoutes {
         res: Response<PriceResponse | string, {}>
       ) => {
         validatePriceRequest(req.body);
-        res.status(200).json(await price(req.body));
+        const resp = await price(req.body);
+        res.status(200).json(resp);
       }
     )
   );

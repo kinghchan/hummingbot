@@ -330,8 +330,13 @@ export class EthereumBase {
         );
       }
     }
+    // const params: any = {
+    //   gasLimitTransaction: this._gasLimitTransaction,
+    //   nonce: nonce,
+    // };
+    const gasLimit = this._gasLimitTransaction;
     const params: any = {
-      gasLimitTransaction: this._gasLimitTransaction,
+      gasLimit: gasLimit,
       nonce: nonce,
     };
     if (maxFeePerGas || maxPriorityFeePerGas) {
