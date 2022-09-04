@@ -152,6 +152,7 @@ class DydxPerpetualDerivative(ExchangeBase, PerpetualTrading):
         self._set_order_book_tracker(DydxPerpetualOrderBookTracker(
             trading_pairs=trading_pairs,
             api_factory=self._api_factory,
+            # api_factory=build_api_factory()
         ))
         self._tx_tracker = DydxPerpetualDerivativeTransactionTracker(self)
         self._trading_required = trading_required
@@ -172,7 +173,9 @@ class DydxPerpetualDerivative(ExchangeBase, PerpetualTrading):
         # State
         self._dydx_auth = DydxPerpetualAuth(self.dydx_client)
         self._user_stream_tracker = DydxPerpetualUserStreamTracker(
-            dydx_auth=self._dydx_auth, api_factory=self._api_factory
+            dydx_auth=self._dydx_auth,
+            api_factory=self._api_factory
+            # api_factory=build_api_factory()
         )
         self._user_stream_event_listener_task = None
         self._user_stream_tracker_task = None

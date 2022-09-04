@@ -31,6 +31,8 @@ class DydxPerpetualAPIOrderBookDataSource(OrderBookTrackerDataSource):
 
     __daobds__logger: Optional[HummingbotLogger] = None
 
+    count = 0
+
     @classmethod
     def logger(cls) -> HummingbotLogger:
         if cls.__daobds__logger is None:
@@ -166,7 +168,11 @@ class DydxPerpetualAPIOrderBookDataSource(OrderBookTrackerDataSource):
             raise
 
     async def listen_for_subscriptions(self):
-        ws = None
+        self.count += 1
+        # print(self.count)Ï
+        if self.count >= 2:
+            return
+
         while True:
             try:
                 ws: WSAssistant = await self._get_ws_assistant()
@@ -175,6 +181,7 @@ class DydxPerpetualAPIOrderBookDataSource(OrderBookTrackerDataSource):
 
                 async for ws_response in ws.iter_messages():
                     data = ws_response.data
+                    # self.logger().info(data)
                     channel = data.get("channel", "")
                     if channel in [self.ORDERBOOK_CHANNEL, self.TRADE_CHANNEL]:
                         self._message_queue[channel].put_nowait(data)
@@ -241,3 +248,4 @@ class DydxPerpetualAPIOrderBookDataSource(OrderBookTrackerDataSource):
 
     async def listen_for_order_book_snapshots(self, ev_loop: asyncio.BaseEventLoop, output: asyncio.Queue):
         pass
+

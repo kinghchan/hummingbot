@@ -228,6 +228,7 @@ class StartCommand(GatewayChainApiManager):
             self.start_script_strategy()
         else:
             start_strategy: Callable = get_strategy_starter_file(strategy_name)
+            # e.g. 'amm_arb'
             if strategy_name in settings.STRATEGIES:
                 start_strategy(self)
             else:

@@ -4,6 +4,7 @@ from json import JSONDecodeError
 from typing import Any, Dict, Mapping, Optional
 
 import aiohttp
+from aiohttp import WSMessage
 
 from hummingbot.core.web_assistant.connections.data_types import WSRequest, WSResponse
 
@@ -61,7 +62,11 @@ class WSConnection:
             msg = await self._read_message()
             msg = await self._process_message(msg)
             if msg is not None:
-                response = self._build_resp(msg)
+                try:
+                    response = self._build_resp(msg)
+                except Exception as e:
+                    print(f"Ignoreing exception {e}")
+                    continue
                 break
         return response
 

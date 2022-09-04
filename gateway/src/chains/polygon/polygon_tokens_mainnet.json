@@ -41,8 +41,8 @@
     {
       "address": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
       "decimals": 18,
-      "symbol": "ETH",
-      "name": "Ether"
+      "symbol": "WETH",
+      "name": "WEther"
     },
     {
       "address": "0x831753DD7087CaC61aB5644b308642cc1c33Dc13",

@@ -253,10 +253,12 @@ cdef class ArbitrageStrategy(StrategyBase):
                     if self.OPTION_LOG_STATUS_REPORT:
                         self.logger().info(f"Markets are ready. Trading started.")
 
+
             if not all([market.network_status is NetworkStatus.CONNECTED for market in self._sb_markets]):
                 if should_report_warnings:
                     self.logger().warning(f"Markets are not all online. No arbitrage trading is permitted.")
                 return
+
 
             for market_pair in self._market_pairs:
                 self.c_process_market_pair(market_pair)
@@ -324,6 +326,8 @@ cdef class ArbitrageStrategy(StrategyBase):
         cdef:
             object market_1_bid_price = market_pair.first.get_price(False)
             object market_1_ask_price = market_pair.first.get_price(True)
+            # it will use the rate oracle to convert the second pair's unit to be equivalent to the first's
+            # quote and base are converted individually
             object market_2_bid_price = self.market_conversion_rate(market_pair.second) * \
                 market_pair.second.get_price(False)
             object market_2_ask_price = self.market_conversion_rate(market_pair.second) * \
@@ -390,6 +394,11 @@ cdef class ArbitrageStrategy(StrategyBase):
         self._current_profitability = \
             self.c_calculate_arbitrage_top_order_profitability(market_pair)
 
+        # self.log_with_clock(logging.INFO, f"self._current_profitability[0]: {self._current_profitability[0]}")
+        # self.log_with_clock(logging.INFO, f"self._current_profitability[1]: {self._current_profitability[1]}")
+        # self.log_with_clock(logging.INFO, f"self._min_profitability: {self._min_profitability}")
+
+
         if (self._current_profitability[1] < self._min_profitability and
                 self._current_profitability[0] < self._min_profitability):
             return
@@ -421,7 +430,14 @@ cdef class ArbitrageStrategy(StrategyBase):
         )
         quantized_buy_amount = buy_market.c_quantize_order_amount(buy_market_trading_pair_tuple.trading_pair, Decimal(best_amount))
         quantized_sell_amount = sell_market.c_quantize_order_amount(sell_market_trading_pair_tuple.trading_pair, Decimal(best_amount))
+
+        self.log_with_clock(logging.INFO, f"quantized_buy_amount: {quantized_buy_amount}")
+        self.log_with_clock(logging.INFO, f"quantized_sell_amount: {quantized_sell_amount}")
+
+        # this here prevents arb-ing different assets
         quantized_order_amount = min(quantized_buy_amount, quantized_sell_amount)
+
+        # self.log_with_clock(logging.INFO, f"quantized_order_amount: {quantized_order_amount}")
 
         if quantized_order_amount:
             if self._logging_options & self.OPTION_LOG_CREATE_ORDER:
@@ -457,6 +473,8 @@ cdef class ArbitrageStrategy(StrategyBase):
                                                   sell_market_conversion_rate)
 
     def market_conversion_rate(self, market_info: MarketTradingPairTuple) -> Decimal:
+        # i think it assumes here that list always length 1 i.e. 1 'arbitrage pair'
+        # this market_conversion_rate function is RELATIVE to first (primary?) market
         if market_info == self._market_pairs[0].first:
             return Decimal("1")
         elif market_info == self._market_pairs[0].second:
@@ -511,6 +529,8 @@ cdef class ArbitrageStrategy(StrategyBase):
             OrderBook buy_order_book = buy_market_trading_pair_tuple.order_book
             OrderBook sell_order_book = sell_market_trading_pair_tuple.order_book
 
+        # making the asset pair values (e.g. in USD) equivalent
+        # one of the rates will just be 1/1
         buy_market_conversion_rate = self.market_conversion_rate(buy_market_trading_pair_tuple)
         sell_market_conversion_rate = self.market_conversion_rate(sell_market_trading_pair_tuple)
         profitable_orders = c_find_profitable_arbitrage_orders(self._min_profitability,

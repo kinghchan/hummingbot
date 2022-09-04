@@ -911,3 +911,7 @@ class BybitExchange(ExchangeBase):
             throttler=self._throttler,
             time_synchronizer=self._time_synchronizer,
         )
+
+    @property
+    def order_book_tracker(self):
+        return self._order_book_tracker

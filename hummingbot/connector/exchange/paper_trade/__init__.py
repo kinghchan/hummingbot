@@ -11,12 +11,14 @@ def get_order_book_tracker(connector_name: str, trading_pairs: List[str]) -> Ord
     try:
         connector_instance = conn_setting.non_trading_connector_instance_with_default_configuration(
             trading_pairs=trading_pairs)
+        # bybit: order_book_tracker is None here
         return connector_instance.order_book_tracker
     except Exception as exception:
         raise Exception(f"Connector {connector_name} OrderBookTracker class not found ({exception})")
 
 
 def create_paper_trade_market(exchange_name: str, client_config_map: ClientConfigAdapter, trading_pairs: List[str]):
+    # '_paper_trade' suffix is removed at this point
     tracker = get_order_book_tracker(connector_name=exchange_name, trading_pairs=trading_pairs)
     return PaperTradeExchange(client_config_map,
                               tracker,

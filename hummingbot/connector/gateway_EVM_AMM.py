@@ -290,6 +290,7 @@ class GatewayEVMAMM(ConnectorBase):
         await self.update_allowances()
         for token, amount in self._allowances.items():
             if amount <= s_decimal_0 and not self.is_pending_approval(token):
+
                 await self.approve_token(token)
 
     async def approve_token(self, token_symbol: str, **request_args) -> Optional[GatewayInFlightOrder]:
@@ -350,7 +351,7 @@ class GatewayEVMAMM(ConnectorBase):
         )
         for token, amount in resp["approvals"].items():
             ret_val[token] = Decimal(str(amount))
-        print(f"get_allowances() --> {ret_val}")
+        print(f"get_allowances() for {self.chain} --> {ret_val}")
         return ret_val
 
     @async_ttl_cache(ttl=5, maxsize=10)

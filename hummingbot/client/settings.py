@@ -47,11 +47,37 @@ GATEAWAY_CLIENT_CERT_PATH = CERTS_PATH / "client_cert.pem"
 GATEAWAY_CLIENT_KEY_PATH = CERTS_PATH / "client_key.pem"
 
 PAPER_TRADE_EXCHANGES = [  # todo: fix after global config map refactor
-    "binance_paper_trade",
-    "kucoin_paper_trade",
-    "ascend_ex_paper_trade",
-    "gate_io_paper_trade",
-    "mock_paper_exchange",
+    "altmarkets_paper_trade",
+    "ascend_ex_paper_trade",  # default
+    "beaxy_paper_trade",
+    "binance_paper_trade",  # default
+    "bitfinex_paper_trade",
+    "bitmart__paper_trade",
+    "bitmex_paper_trade",
+    "bittrex_paper_trade",
+    "blocktane_paper_trade",
+    "bybit_paper_trade",
+    "coinbase_pro__paper_trade",
+    "coinflex_paper_trade",
+    "coinzoom_paper_trade",
+    "crypto_com_paper_trade",
+    "digifinex_paper_trade",
+    "ftx_paper_trade",
+    "gate_io_paper_trade",  # default
+    "hitbtc_paper_trade",
+    "huobi_paper_trade",
+    "k2_paper_trade",
+    "kraken_paper_trade",
+    "kucoin_paper_trade",  # default
+    "latoken__paper_trade",
+    "liquid_paper_trade",
+    "loopring_paper_trade",
+    "mexc_paper_trade",
+    "ndax_paper_trade",
+    "okx_paper_trade",
+    "probit_paper_trade",
+    "wazirx_paper_trade",
+    "mock_paper_exchange",   # default
 ]
 
 
@@ -250,7 +276,7 @@ class ConnectorSetting(NamedTuple):
         kwargs.update(trading_pairs=trading_pairs, trading_required=False)
         kwargs["client_config_map"] = HummingbotApplication.main_application().client_config_map
         connector = connector_class(**kwargs)
-
+        # bybit has no orderbook tracker...
         return connector
 
 

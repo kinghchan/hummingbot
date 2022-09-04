@@ -38,12 +38,14 @@ class DydxPerpetualOrderBookTracker(OrderBookTracker):
         trading_pairs: Optional[List[str]] = None,
         api_factory: Optional[WebAssistantsFactory] = None
     ):
+        orderbook_source = DydxPerpetualAPIOrderBookDataSource(
+            trading_pairs=trading_pairs,
+            api_factory=api_factory
+        )
         super().__init__(
-            DydxPerpetualAPIOrderBookDataSource(
-                trading_pairs=trading_pairs,
-                api_factory=api_factory
-            ),
-            trading_pairs)
+            orderbook_source,
+            trading_pairs
+        )
 
         self._order_books: Dict[str, DydxPerpetualOrderBook] = {}
         self._saved_message_queues: Dict[str, Deque[DydxPerpetualOrderBookMessage]] = defaultdict(lambda: deque(maxlen=1000))
@@ -57,7 +59,9 @@ class DydxPerpetualOrderBookTracker(OrderBookTracker):
 
     def start(self):
         super().start()
-        self._order_book_stream_listener_task = safe_ensure_future(self._data_source.listen_for_subscriptions())
+        print('start')
+        listen_func = self._data_source.listen_for_subscriptions()
+        self._order_book_stream_listener_task = safe_ensure_future(listen_func)
 
     def stop(self):
         self._order_book_stream_listener_task and self._order_book_stream_listener_task.cancel()
@@ -97,3 +101,6 @@ class DydxPerpetualOrderBookTracker(OrderBookTracker):
                     app_warning_msg="Unexpected error tracking order book. Retrying after 5 seconds.",
                 )
                 await asyncio.sleep(5.0)
+
+
+
