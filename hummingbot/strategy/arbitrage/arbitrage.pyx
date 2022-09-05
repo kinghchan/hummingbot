@@ -696,6 +696,7 @@ cdef list c_find_profitable_arbitrage_orders(object min_profitability,
                 break
 
             # adjust price based on the quote token rates
+            # IC: both the base and quote assets will be scaled to correct units
             current_bid_price_adjusted = current_bid.price * sell_market_conversion_rate
             current_ask_price_adjusted = current_ask.price * buy_market_conversion_rate
             # arbitrage not possible
@@ -705,6 +706,7 @@ cdef list c_find_profitable_arbitrage_orders(object min_profitability,
             if min_profitability<0 and current_bid_price_adjusted/current_ask_price_adjusted < (1 + min_profitability):
                 break
 
+            # step_amount == trade quantity
             step_amount = min(bid_leftover_amount, ask_leftover_amount)
 
             # skip cases where step_amount=0 for exchanges like binance that include orders with 0 amount
