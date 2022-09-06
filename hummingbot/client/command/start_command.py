@@ -48,8 +48,10 @@ class StartCommand(GatewayChainApiManager):
               restore: Optional[bool] = False,
               script: Optional[str] = None):
         if threading.current_thread() != threading.main_thread():
+            # this will hit execute the 'start' script, but not below?
             self.ev_loop.call_soon_threadsafe(self.start, log_level, restore)
             return
+        # will hit this if starting from new process
         safe_ensure_future(self.start_check(log_level, restore, script), loop=self.ev_loop)
 
     async def start_check(self,  # type: HummingbotApplication
@@ -227,6 +229,7 @@ class StartCommand(GatewayChainApiManager):
         if self.is_current_strategy_script_strategy():
             self.start_script_strategy()
         else:
+            # here is where the 'start script' gets called
             start_strategy: Callable = get_strategy_starter_file(strategy_name)
             # e.g. 'amm_arb'
             if strategy_name in settings.STRATEGIES:
