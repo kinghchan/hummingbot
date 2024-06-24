@@ -68,11 +68,24 @@ class OrderBookTrackerDataSource(metaclass=ABCMeta):
         order_book.apply_snapshot(snapshot_msg.bids, snapshot_msg.asks, snapshot_msg.update_id)
         return order_book
 
+    async def initial_check(self):
+        # self._connected_websocket_assistant() may throw NotImplementedError
+        # all it does is create noisy logs, I think. so I wrote this.
+        try:
+            ws: WSAssistant = await self._connected_websocket_assistant()
+            return True
+        except ImportError:
+            self.logger().info("self._connected_websocket_assistant() not implemented")
+            return False
+
     async def listen_for_subscriptions(self):
         """
         Connects to the trade events and order diffs websocket endpoints and listens to the messages sent by the
         exchange. Each message is stored in its own queue.
         """
+        if not await self.initial_check():
+            return None
+
         ws: Optional[WSAssistant] = None
         while True:
             try:

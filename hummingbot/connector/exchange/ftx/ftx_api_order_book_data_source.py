@@ -179,6 +179,7 @@ class FtxAPIOrderBookDataSource(OrderBookTrackerDataSource):
                         if "channel" in msg:
                             if msg["channel"] == "orderbook" and msg["type"] == "update":
                                 order_book_message: OrderBookMessage = FtxOrderBook.diff_message_from_exchange(msg, msg["data"]["time"])
+                                # print(order_book_message)
                                 output.put_nowait(order_book_message)
             except asyncio.CancelledError:
                 raise
@@ -211,3 +212,9 @@ class FtxAPIOrderBookDataSource(OrderBookTrackerDataSource):
                 self.logger().error("Unexpected error with WebSocket connection. Retrying after 30 seconds...",
                                     exc_info=True)
                 await asyncio.sleep(30.0)
+
+    # IC: must implement this, otherwise NotImplementedError downstream
+    async def listen_for_subscriptions(self):
+        # do nothing! let's see...
+        print(f"fake listen_for_subscriptions() ")
+        pass

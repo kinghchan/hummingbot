@@ -1129,3 +1129,4 @@ cdef class PaperTradeExchange(ExchangeBase):
                                   event):
         await asyncio.sleep(0.01)
         self.c_trigger_event(event_tag, event)
+

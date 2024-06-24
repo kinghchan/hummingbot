@@ -84,6 +84,7 @@ coverage.xml
 
 # Gateway-V2 repo
 # configuration files
+# IC - exclude below
 /gateway/conf/*
 /gateway_conf
 # except the examples, template and migration files in /gateway/conf/

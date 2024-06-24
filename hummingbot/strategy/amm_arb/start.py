@@ -7,7 +7,7 @@ from hummingbot.strategy.market_trading_pair_tuple import MarketTradingPairTuple
 from hummingbot.strategy.amm_arb.amm_arb import AmmArbStrategy
 from hummingbot.strategy.amm_arb.amm_arb_config_map import amm_arb_config_map
 
-
+# the 'self' here is Hummingbot Application...
 def start(self):
     connector_1 = amm_arb_config_map.get("connector_1").value.lower()
     market_1 = amm_arb_config_map.get("market_1").value

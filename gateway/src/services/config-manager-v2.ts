@@ -357,6 +357,10 @@ export class ConfigManagerV2 {
   get(fullConfigPath: string): any {
     const { namespace, configPath } = this.unpackFullConfigPath(fullConfigPath);
     const configValue: any = namespace.get(configPath);
+
+    if (fullConfigPath.endsWith('tokenListSource')) {
+      // console.log("configValue: ", configValue);
+    }
     if (configValue === undefined) {
       return ConfigManagerV2.getFromDefaults(namespace.id, configPath);
     }

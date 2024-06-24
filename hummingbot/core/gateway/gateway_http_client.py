@@ -61,7 +61,8 @@ class GatewayHttpClient:
         api_host = client_config_map.gateway.gateway_api_host
         api_port = client_config_map.gateway.gateway_api_port
         if GatewayHttpClient.__instance is None:
-            self._base_url = f"https://{api_host}:{api_port}"
+            # self._base_url = f"https://{api_host}:{api_port}"
+            self._base_url = f"http://{api_host}:{api_port}"
         self._client_confi_map = client_config_map
         GatewayHttpClient.__instance = self
 
@@ -77,12 +78,13 @@ class GatewayHttpClient:
         :returns Shared client session instance
         """
         if cls._shared_client is None or re_init:
-            cert_path = get_gateway_paths(client_config_map).local_certs_path.as_posix()
-            ssl_ctx = ssl.create_default_context(cafile=f"{cert_path}/ca_cert.pem")
-            ssl_ctx.load_cert_chain(certfile=f"{cert_path}/client_cert.pem",
-                                    keyfile=f"{cert_path}/client_key.pem",
-                                    password=Security.secrets_manager.password.get_secret_value())
-            conn = aiohttp.TCPConnector(ssl_context=ssl_ctx)
+            # cert_path = get_gateway_paths(client_config_map).local_certs_path.as_posix()
+            # ssl_ctx = ssl.create_default_context(cafile=f"{cert_path}/ca_cert.pem")
+            # ssl_ctx.load_cert_chain(certfile=f"{cert_path}/client_cert.pem",
+            #                         keyfile=f"{cert_path}/client_key.pem",
+            #                         password=Security.secrets_manager.password.get_secret_value())
+            # conn = aiohttp.TCPConnector(ssl_context=ssl_ctx)
+            conn = aiohttp.TCPConnector()
             cls._shared_client = aiohttp.ClientSession(connector=conn)
         return cls._shared_client
 
@@ -323,6 +325,9 @@ class GatewayHttpClient:
             request_payload["maxFeePerGas"] = str(max_fee_per_gas)
         if max_priority_fee_per_gas is not None:
             request_payload["maxPriorityFeePerGas"] = str(max_priority_fee_per_gas)
+
+        print(f"request_payload: {str(request_payload)}")
+
         return await self.api_request(
             "post",
             "evm/approve",

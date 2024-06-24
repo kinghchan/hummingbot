@@ -92,7 +92,9 @@ export async function allowances(
   const wallet = await ethereumish.getWallet(req.address);
   const tokens = getTokenSymbolsToTokens(ethereumish, req.tokenSymbols);
   const spender = ethereumish.getSpender(req.spender);
-
+  // OMG the tokens variable is empty for Ethereum
+  // USDC:   0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E
+  // WETH.e: 0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB
   const approvals: Record<string, string> = {};
   await Promise.all(
     Object.keys(tokens).map(async (symbol) => {
@@ -101,7 +103,8 @@ export async function allowances(
         tokens[symbol].address,
         ethereumish.provider
       );
-      approvals[symbol] = tokenValueToString(
+
+      const value = tokenValueToString(
         await ethereumish.getERC20Allowance(
           contract,
           wallet,
@@ -109,6 +112,7 @@ export async function allowances(
           tokens[symbol].decimals
         )
       );
+      approvals[symbol] = value;
     })
   );
 
